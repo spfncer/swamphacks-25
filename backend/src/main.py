@@ -6,6 +6,7 @@ from typing import Union
 from fastapi import FastAPI, Body, status
 
 from models.comment import CommentModel, UpdateCommentModel, CommentCollection
+from bson import ObjectId
 
 import motor.motor_asyncio
 from pymongo.server_api import ServerApi
@@ -63,15 +64,18 @@ async def list_comments():
 @app.get(
     "/comments/{id}",
     response_description="Get a comment by ID",
-    response_model=CommentCollection,
+    response_model=CommentModel,
     response_model_by_alias=False,
 )
 async def get_comment(id: str):
     """
     Get a single comment from the database by ID.
     """
-    # TODO: get comment
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    if (
+        comment := await comment_collection.find_one({"_id": ObjectId(id)})
+    ) is not None:
+        return comment
+    raise HTTPException(status_code=404, detail=f"Comment {id} not found!")
 
 @app.put(
     "/comments/{id}",
