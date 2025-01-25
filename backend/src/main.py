@@ -1,5 +1,5 @@
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 from typing import Union
 
@@ -33,12 +33,18 @@ async def read_root():
     status_code=status.HTTP_201_CREATED,
     response_model_by_alias=False,
 )
-async def create_comment(student: CommentModel = Body(...)):
+async def create_comment(comment: CommentModel = Body(...)):
     """
     Insert a new comment record.
     A unique `id` will be created and provided in the response.
     """
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    new_comment = await comment_collection.insert_one(
+        comment.model_dump(by_alias=True, exclude=["id"])
+    )
+    created_comment = await comment_collection.find_one(
+        {"_id": new_comment.inserted_id}
+    )
+    return created_comment
 
 
 @app.get(
