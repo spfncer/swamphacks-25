@@ -1,11 +1,12 @@
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 from typing import Union
 
 from fastapi import FastAPI, Body, status
 
 from models.comment import CommentModel, UpdateCommentModel, CommentCollection
+from bson import ObjectId
 
 import motor.motor_asyncio
 from pymongo.server_api import ServerApi
@@ -33,12 +34,18 @@ async def read_root():
     status_code=status.HTTP_201_CREATED,
     response_model_by_alias=False,
 )
-async def create_comment(student: CommentModel = Body(...)):
+async def create_comment(comment: CommentModel = Body(...)):
     """
     Insert a new comment record.
     A unique `id` will be created and provided in the response.
     """
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    new_comment = await comment_collection.insert_one(
+        comment.model_dump(by_alias=True, exclude=["id"])
+    )
+    created_comment = await comment_collection.find_one(
+        {"_id": new_comment.inserted_id}
+    )
+    return created_comment
 
 
 @app.get(
@@ -57,15 +64,18 @@ async def list_comments():
 @app.get(
     "/comments/{id}",
     response_description="Get a comment by ID",
-    response_model=CommentCollection,
+    response_model=CommentModel,
     response_model_by_alias=False,
 )
 async def get_comment(id: str):
     """
     Get a single comment from the database by ID.
     """
-    # TODO: get comment
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    if (
+        comment := await comment_collection.find_one({"_id": ObjectId(id)})
+    ) is not None:
+        return comment
+    raise HTTPException(status_code=404, detail=f"Comment {id} not found!")
 
 @app.put(
     "/comments/{id}",
