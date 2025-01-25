@@ -1,10 +1,24 @@
+from dotenv import load_dotenv
+import os
+
 from typing import Union
 
 from fastapi import FastAPI, Body, status
 
 from models.comment import CommentModel, UpdateCommentModel, CommentCollection
 
+import motor.motor_asyncio
+from pymongo.server_api import ServerApi
+
+load_dotenv(dotenv_path="../.env")
+
 app = FastAPI()
+
+# Setup Mongo Database Connection
+mongo_url = os.getenv("MONGODB_URL")
+client = motor.motor_asyncio.AsyncIOMotorClient(mongo_url)
+db = client.get_database("Comments")
+comment_collection = db.get_collection("websites")
 
 @app.get("/")
 async def read_root():
@@ -38,7 +52,7 @@ async def list_comments():
     List all of the comment data in the database.
     The response is unpaginated and limited to 1000 results.
     """
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    return CommentCollection(comments=await comment_collection.find().to_list(1000))
 
 @app.get(
     "/comments/{id}",
