@@ -92,6 +92,21 @@ async def list_comments():
     return CommentCollection(comments=await app.comment_collection.find().to_list(1000))
 
 @app.get(
+    "/comments/{webpage}",
+    response_description="Comments form specific website",
+    response_model=CommentCollection,
+    response_model_by_alias=False,
+    tags=["Comment Functions"]
+)
+async def website_comments(webpage: str):
+    """
+    List comments data in the database for the specific
+    website the user is currently on.
+    """
+    comments_for_site = await app.comment_collection.find({"webpage": webpage}).to_list(1000)
+    return CommentCollection(comments=comments_for_site)
+
+@app.get(
     "/comments/{id}",
     response_description="Get a comment by ID",
     response_model=CommentModel,
