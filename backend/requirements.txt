@@ -1,1 +1,3 @@
+pymongo[srv]
 fastapi[standard]
+python-dotenv
