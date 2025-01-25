@@ -14,7 +14,22 @@ from pymongo.server_api import ServerApi
 
 load_dotenv(dotenv_path="../.env")
 
-app = FastAPI()
+tags_metadata = [
+    {
+        "name": "Comment Functions",
+        "description": "Operations related to comments on a webpage.",
+    },
+    {
+        "name": "Other"
+    }
+]
+
+app = FastAPI(
+    title="WebsiteCommentDatabase",
+    description="A simple API to manage comments on a webpage through a chrome extension",
+    version="0.1.0",
+    openapi_tags=tags_metadata
+)
 
 # Setup Mongo Database Connection
 mongo_url = os.getenv("MONGODB_URL")
@@ -22,7 +37,7 @@ client = motor.motor_asyncio.AsyncIOMotorClient(mongo_url)
 db = client.get_database("Comments")
 comment_collection = db.get_collection("websites")
 
-@app.get("/")
+@app.get("/", tags=["Other"])
 async def read_root():
     return {"Hello": "World"}
 
@@ -34,6 +49,7 @@ async def read_root():
     response_model=CommentModel,
     status_code=status.HTTP_201_CREATED,
     response_model_by_alias=False,
+    tags=["Comment Functions"]
 )
 async def create_comment(comment: CommentModel = Body(...)):
     """
@@ -54,6 +70,7 @@ async def create_comment(comment: CommentModel = Body(...)):
     response_description="List all comments",
     response_model=CommentCollection,
     response_model_by_alias=False,
+    tags=["Comment Functions"]
 )
 async def list_comments():
     """
@@ -67,6 +84,7 @@ async def list_comments():
     response_description="Get a comment by ID",
     response_model=CommentModel,
     response_model_by_alias=False,
+    tags=["Comment Functions"]
 )
 async def get_comment(id: str):
     """
@@ -83,6 +101,7 @@ async def get_comment(id: str):
     response_description="Update a comment",
     response_model=CommentModel,
     response_model_by_alias=False,
+    tags=["Comment Functions"]
 )
 async def update_comment(id: str, comment: UpdateCommentModel = Body(...)):
     """
@@ -115,7 +134,8 @@ async def update_comment(id: str, comment: UpdateCommentModel = Body(...)):
 
 @app.delete(
     "/comments/{id}", 
-    response_description="Delete a comment"
+    response_description="Delete a comment",
+    tags=["Comment Functions"]
 )
 async def delete_comment(id: str):
     """
