@@ -1,0 +1,43 @@
+name: Backend
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Dependencies
+      run: |
+        echo "Installing PIP..."
+        python -m pip install --upgrade pip
+        echo "Installing dependencies..."
+        if  [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+    - name: Test
+      run: |
+        pip install -U pytest
+        pytest -vs tests/*.py
+
+    - name: Run PyLint
+      run: |
+        pip install pylint
+        pylint --fail-under=6.5 $(git ls-files '*.py')
