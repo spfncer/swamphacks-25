@@ -81,7 +81,6 @@ async def list_comments(client: motor.motor_asyncio.AsyncIOMotorClient = Depends
     db = client["Comments"]
     comment_collection = db["websites"]
 
-
     return CommentCollection(comments=await comment_collection.find().to_list(1000))
 
 @app.get(
@@ -91,12 +90,15 @@ async def list_comments(client: motor.motor_asyncio.AsyncIOMotorClient = Depends
     response_model_by_alias=False,
     tags=["Comment Functions"]
 )
-async def website_comments(webpage: str):
+async def website_comments(webpage: str, client: motor.motor_asyncio.AsyncIOMotorClient = Depends(get_prod_db)):
     """
     List comments data in the database for the specific
     website the user is currently on.
     """
-    comments_for_site = await app.comment_collection.find({"webpage": webpage}).to_list(1000)
+    db = client["Comments"]
+    comment_collection = db["websites"]
+
+    comments_for_site = await comment_collection.find({"webpage": webpage}).to_list(1000)
     return CommentCollection(comments=comments_for_site)
 
 @app.get(
