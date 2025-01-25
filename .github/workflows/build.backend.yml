@@ -35,7 +35,7 @@ jobs:
     - name: Test
       run: |
         pip install -U pytest
-        pytest -vs tests/*.py
+        pytest -vs test/*.py
 
     - name: Run PyLint
       run: |
