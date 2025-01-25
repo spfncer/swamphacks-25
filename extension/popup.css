@@ -1,0 +1,17 @@
+html {
+    background-color: blanchedalmond;
+    min-width: 400px;
+    min-height: 600px;
+}
+.comments-area{
+    min-height: 200px;
+}
+#comment-input{
+    width: 100%;
+    resize: none;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Hides the scrollbar */
+}
+.comment-input::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar */
+}
