@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from typing import Union
 
-from fastapi import FastAPI, Body, status
+from fastapi import FastAPI, Body, Response, HTTPException, status
 
 from models.comment import CommentModel, UpdateCommentModel, CommentCollection
 from bson import ObjectId
@@ -114,5 +114,9 @@ async def delete_student(id: str):
     """
     Remove a single student record from the database.
     """
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    delete_result = await comment_collection.delete_one({"_id": ObjectId(id)})
+    if delete_result.deleted_count == 1:
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail=f"Comment {id} not found!")
 
