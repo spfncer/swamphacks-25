@@ -63,3 +63,25 @@ class UpdateCommentModel(BaseModel):
             }
         },
     )
+
+class CommentFilters(BaseModel):
+    """
+    A set of filters that are used when searching for comments in the database.
+    """
+    ids: Optional[List[PyObjectId]] = None
+    webpage: Optional[str] = None
+    author: Optional[str] = None
+    body: Optional[str] = None
+
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+        json_encoders={ObjectId: str},
+        json_schema_extra={
+            "example": {
+                "webpage": "www.example.com",
+                "author": "jdoe@example.com",
+                "body": "regex"
+            }
+        },
+    )
+
