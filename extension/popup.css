@@ -4,13 +4,17 @@ html {
     min-height: 600px;
 }
 .comments-area{
-    min-height: 200px;
+    /* min-height: 200px; */
 }
-#comment-input{
-    width: 100%;
-    resize: none;
-    overflow-y: hidden;
-    scrollbar-width: none; /* Hides the scrollbar */
+
+
+.CodeMirror-scroll{
+    background-color: blanchedalmond;
+    border-color: blanchedalmond;
+}
+.CodeMirror {
+    background-color: blanchedalmond !important;
+    border-color: blanchedalmond !important;
 }
 .comment-input::-webkit-scrollbar {
     display: none; /* Hides the scrollbar */
