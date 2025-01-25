@@ -9,6 +9,7 @@ from models.comment import CommentModel, UpdateCommentModel, CommentCollection
 from bson import ObjectId
 
 import motor.motor_asyncio
+from pymongo import ReturnDocument
 from pymongo.server_api import ServerApi
 
 load_dotenv(dotenv_path="../.env")
@@ -85,7 +86,7 @@ async def get_comment(id: str):
 )
 async def update_comment(id: str, comment: UpdateCommentModel = Body(...)):
     """
-    Update individual fields of an existing student record.
+    Update individual fields of an existing comment record.
     Only the provided fields will be updated.
     Any missing or `null` fields will be ignored.
     """
@@ -93,26 +94,32 @@ async def update_comment(id: str, comment: UpdateCommentModel = Body(...)):
         k: v for k, v in comment.model_dump(by_alias=True).items() if v is not None
     }
 
-    # if len(comment) >= 1:
-        #Perform Update
-        # If update results isn't none then return
-        # otherwise raise http exception 404
+    if len(comment) >= 1:
+        update_result = await comment_collection.find_one_and_update(
+            {"_id": ObjectId(id)},
+            {"$set": comment},
+            return_document=ReturnDocument.AFTER,
+        )
+        if update_result is not None:
+            return update_result
+        else:
+            raise HTTPException(status_code=404, detail=f"Comment {id} not found!")
 
     # The update is empty, but we should still return the matching document:
-    # if (existing_comment := await comment_collection.find_one({"_id": id})) is not None:
-    #     return existing_comment
+    if (existing_comment := await comment_collection.find_one({"_id": id})) is not None:
+        return existing_comment
     
     # Something went wrong
-    raise HTTPException(status_code=501, detail=f"Not Implemented")
+    raise HTTPException(status_code=404, detail=f"Comment {id} not found!")
 
 
 @app.delete(
     "/comments/{id}", 
-    response_description="Delete a student"
+    response_description="Delete a comment"
 )
-async def delete_student(id: str):
+async def delete_comment(id: str):
     """
-    Remove a single student record from the database.
+    Remove a single comment record from the database.
     """
     delete_result = await comment_collection.delete_one({"_id": ObjectId(id)})
     if delete_result.deleted_count == 1:
