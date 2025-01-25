@@ -7,7 +7,7 @@ from fastapi import FastAPI, Depends, Body, Response, HTTPException, status
 
 from contextlib import asynccontextmanager
 
-from app.models.comment import CommentModel, UpdateCommentModel, CommentCollection
+from app.models.comment import CommentModel, UpdateCommentModel, CommentCollection, CommentFilters
 
 from bson import ObjectId
 
@@ -66,40 +66,36 @@ async def create_comment(comment: CommentModel = Body(...), client: motor.motor_
     )
     return created_comment
 
-@app.get(
-    "/comments/",
-    response_description="List all comments",
+@app.post(
+    "/comments/search",
+    response_description="Search for comments based on given filters",
     response_model=CommentCollection,
     response_model_by_alias=False,
     tags=["Comment Functions"]
 )
-async def list_comments(client: motor.motor_asyncio.AsyncIOMotorClient = Depends(get_prod_db)):
+async def search_comments(filters: CommentFilters, client: motor.motor_asyncio.AsyncIOMotorClient = Depends(get_prod_db)):
     """
-    List all of the comment data in the database.
-    The response is unpaginated and limited to 1000 results.
-    """
-    db = client["Comments"]
-    comment_collection = db["websites"]
-
-    return CommentCollection(comments=await comment_collection.find().to_list(1000))
-
-@app.get(
-    "/comments/{webpage}",
-    response_description="Comments form specific website",
-    response_model=CommentCollection,
-    response_model_by_alias=False,
-    tags=["Comment Functions"]
-)
-async def website_comments(webpage: str, client: motor.motor_asyncio.AsyncIOMotorClient = Depends(get_prod_db)):
-    """
-    List comments data in the database for the specific
-    website the user is currently on.
+    List comments data in the database based on user provided search queries.
     """
     db = client["Comments"]
     comment_collection = db["websites"]
 
-    comments_for_site = await comment_collection.find({"webpage": webpage}).to_list(1000)
-    return CommentCollection(comments=comments_for_site)
+    query = {}
+
+    if filters.ids:
+        query["_id"] = {"$in": [str(id) for id in filters.ids]}
+
+    if filters.webpage:
+        query["webpage"] = filters.webpage
+
+    if filters.author:
+        query["author"] = filters.author
+
+    if filters.body:
+        query["body"] = {"$regex": filters.body, "$options": "i"}  # Case-insensitive search for body
+
+    result_comments = await comment_collection.find(query).to_list(1000)
+    return CommentCollection(comments=result_comments)
 
 @app.get(
     "/comments/{id}",
