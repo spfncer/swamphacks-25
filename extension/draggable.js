@@ -1,8 +1,11 @@
 function makeElementDraggable(drag) {
+    console.log("Making draggable", drag);
     const boundingBox = drag.getBoundingClientRect();
 
     drag.style.x = `${boundingBox.x}px`;
     drag.style.y = `${boundingBox.y}px`;
+    drag.style.width = `${boundingBox.width}px`;
+    drag.style.height = `${boundingBox.height}px`;
     drag.style.position = "absolute";
 
     drag.addEventListener("mousedown", (e) => {
@@ -27,7 +30,6 @@ function makeElementDraggable(drag) {
     });
 }
 window.makeElementDraggable = makeElementDraggable;
-console.log("Draggable script loaded", makeElementDraggable);
 
 window.addEventListener("DOMContentLoaded", () => {
     const drags = document.querySelectorAll("[data-draggable]");
