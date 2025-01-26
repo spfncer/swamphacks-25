@@ -23,6 +23,7 @@ from pymongo.server_api import ServerApi
 
 from starlette.middleware.sessions import SessionMiddleware  # 👈 new code
 from auth.routes import auth_router  # 👈 new code
+from fastapi.responses import HTMLResponse
 
 load_dotenv(dotenv_path="../.env")
 
@@ -65,6 +66,13 @@ app.include_router(auth_router)
 @app.get("/", tags=["Other"])
 async def read_root():
     return {"Hello": "World"}
+
+# Define a route for login success
+@app.get("/login_successful", tags=["Other"], response_class=HTMLResponse)
+async def login_successful():
+    with open("resources/login_successful.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
 
 
 @app.post(
