@@ -6,6 +6,15 @@
     font-display: swap;
 }
 
+@font-face {
+  font-family: 'Oooh Baby';
+  src: url('OoohBaby-Regular.woff2') format('woff2'),
+      url('OoohBaby-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
     background-color: blanchedalmond;
     width: 775px;
@@ -43,9 +52,17 @@ html {
 .commends-area::-webkit-scrollbar {
     display: none;
 }
+span.comment {
+  font-family: "Oooh Baby";
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+}
 span.tary {
   font-family: "Cormorant Garamond";
   font-size: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 .left {
