@@ -25,7 +25,6 @@ from starlette.middleware.sessions import SessionMiddleware  # 👈 new code
 from auth.routes import auth_router  # 👈 new code
 
 # Added for login success page
-from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 
@@ -35,6 +34,10 @@ tags_metadata = [
     {
         "name": "Comment Functions",
         "description": "Operations related to comments on a webpage.",
+    },
+    {
+        "name": "Authentication Functions",
+        "description": "Operations related to authentication with Auth0.",
     },
     {"name": "Other"},
 ]
@@ -73,14 +76,6 @@ app.include_router(auth_router)
 @app.get("/", tags=["Other"])
 async def read_root():
     return {"Hello": "World"}
-
-# Define a route for login success
-@app.get("/login_successful", tags=["Other"], response_class=HTMLResponse)
-async def login_successful():
-    with open("static/login_successful.html", "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
-
 
 @app.post(
     "/comments",

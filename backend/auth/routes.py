@@ -1,13 +1,13 @@
 from urllib.parse import quote_plus, urlencode
 from fastapi import APIRouter, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 
 from auth.config import auth0_config, oauth
 
 auth_router = APIRouter()
 
 
-@auth_router.get("/login")
+@auth_router.get("/login", tags=["Authentication Functions"])
 async def login(request: Request):
     """
     Redirects the user to the Auth0 Universal Login (https://auth0.com/docs/authenticate/login/auth0-universal-login)
@@ -19,7 +19,7 @@ async def login(request: Request):
     return RedirectResponse(url="/")
 
 
-@auth_router.get("/signup")
+@auth_router.get("/signup", tags=["Authentication Functions"])
 async def signup(request: Request):
     """
     Redirects the user to the Auth0 Universal Login (https://auth0.com/docs/authenticate/login/auth0-universal-login)
@@ -31,7 +31,7 @@ async def signup(request: Request):
     return RedirectResponse(url="/")
 
 
-@auth_router.get("/logout")
+@auth_router.get("/logout", tags=["Authentication Functions"])
 def logout(request: Request):
     """
     Redirects the user to the Auth0 Universal Login (https://auth0.com/docs/authenticate/login/auth0-universal-login)
@@ -52,7 +52,7 @@ def logout(request: Request):
     return response  # 👈 updated code
 
 
-@auth_router.get("/callback")
+@auth_router.get("/callback", tags=["Authentication Functions"])
 async def callback(request: Request):
     """
     Callback redirect from Auth0
@@ -64,9 +64,16 @@ async def callback(request: Request):
 
     return RedirectResponse(url="/login_successful")  # 👈 updated code
 
-@auth_router.get("/profile")
+@auth_router.get("/profile", tags=["Authentication Functions"])
 async def profile(request: Request):
     if "userinfo" in request.session:
         return {**{"auth": True}, **request.session["userinfo"]}
     else:
         return {"auth": False}
+
+# Define a route for login success
+@auth_router.get("/login_successful", tags=["Authentication Functions"], response_class=HTMLResponse)
+async def login_successful():
+    with open("static/login_successful.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
