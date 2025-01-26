@@ -20,3 +20,7 @@ yarn-error.log
 
 extension/lib/simplemde.min.js:Zone.Identifier
 extension/lib/simplemde.min.css:Zone.Identifier
+
+# SvelteKit
+.svelte-kit/
+build/
