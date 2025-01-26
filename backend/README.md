@@ -1,17 +1,29 @@
 # Backend
 
-## Installation
+## Installation & Execution
 
-To install and execute the project, run the following command within the `/backend` folder:
+First, create a `.env` file within the `/backend` directory, following the strucutre of the `sample.env` file. 
+Add the appropriate fields to the `.env` file to point to a MongoDB instance. The application expects a database "Comments" and collection "websites" to exist in the MongoDB instance. 
+
+To install dependencies of the FastAPI server, run the following commands within the `/backend` folder:
 ```
 pip install -r requirements.txt
 ```
 
-Then, create a `.env` file within the `/backend` directory, following the strucutre of the `sample.env` file.
-
-To run the project, execute the following the command within the `/backend/src` folder: 
+To run the FastAPI server, execute the following command from within the `/backend/src` folder: 
 ```
 fastapi dev main.py
 ```
 
-## Execution
+To install dependencies of the FastAPI server unit tests, run teh following command within the `/backend` folder:
+```
+pip install -r requirements.dev.txt
+```
+
+To run the project's unit tests, execute the following command from with in the `/backend` folder:
+```
+python -m pytest test
+```
+
+> [!NOTE]
+> Unit tests run against a local (mocked) instance of MongoDB. Follow proper installation instructions to set that instance up. 
