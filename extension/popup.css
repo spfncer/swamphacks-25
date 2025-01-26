@@ -19,3 +19,53 @@ html {
 .comment-input::-webkit-scrollbar {
     display: none; /* Hides the scrollbar */
 }
+
+ul.comments-area,li{
+    list-style:none;
+  }
+  ul.comments-area{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  ul.comments-area li div{
+    text-decoration:none;
+    color:#000;
+    background:#ffc;
+    display:block;
+    height:10em;
+    width:10em;
+    padding:1em;
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    transform: rotate(-6deg);
+    transition: transform .15s linear;
+  }
+  
+  ul.comments-area li:nth-child(even) div{
+    transform:rotate(4deg);
+    position:relative;
+    top:5px;
+    background:#cfc;
+  }
+  ul.comments-area li:nth-child(3n) div{
+    transform:rotate(-3deg);
+    position:relative;
+    top:-5px;
+    background:#ccf;
+  }
+  ul.comments-area li:nth-child(5n) div{
+    transform:rotate(5deg);
+    position:relative;
+    top:-10px;
+  }
+  
+  ul.comments-area li div:hover,ul.comments-area li div:focus{
+    box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    transform: scale(1.25);
+    position:relative;
+    z-index:5;
+  }
+  
+  ul.comments-area li{
+    margin:1em;
+  }

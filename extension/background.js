@@ -1,12 +1,19 @@
- /// <reference path="chrome.intellisense.js" />
+/// <reference path="chrome.intellisense.js" />
 console.log("Background script loaded");
-chrome.runtime.onMessage.addListener(function (message, sender, senderResponse){
-    if(message.type == "getComments") {
-        const commentResponse = fetch("http://127.0.0.1:8000/comments/", {method: "GET"})
-        .then(response => response.json())
-        .then(data => {
-            senderResponse(data);
+chrome.runtime.onMessage.addListener(function (message, sender, senderResponse) {
+    if (message.type == "getComments") {
+        fetch("http://127.0.0.1:8000/comments/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }, 
+            body: JSON.stringify({
+                "webpage": "www.example.com"
+            })
         })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Raw data", data);
+                senderResponse(data);
+            })
         return true;
     }
 });

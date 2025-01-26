@@ -18,13 +18,17 @@ chrome.runtime.sendMessage({ type: "getComments" }, function (response) {
     if(typeof response === "object" && typeof response.comments === "object") {
         const commentsArea = document.querySelector(".comments-area");
         response.comments.forEach(comment => {
+            const commentLi = document.createElement("li");
             const commentDiv = document.createElement("div");
             commentDiv.classList.add("comment");
-            commentDiv.innerText = comment.body;
-            commentsArea.appendChild(commentDiv);
+            const para = document.createElement("p");
+            para.innerText = comment.body;
+            commentDiv.appendChild(para);
+            commentLi.appendChild(commentDiv);
+            commentsArea.appendChild(commentLi);
         });
     } else {
-        console.log(response);
+        console.log("No comments found");
     }
 
 });
