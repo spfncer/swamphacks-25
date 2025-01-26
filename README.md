@@ -11,6 +11,12 @@ Developed by: [Gabriel Aldous](https://github.com/Sn00pyW00dst0ck), [John Spurri
 > [!NOTE]
 > Currently, Comment-Tary is not published. To use it, you will need to setup a local development environment.
 
+### How to use the extension
+
+The extension shows the site that you are currently are visiting with the url field in the top of the extension's pop-up. This will be listed under the heading 'This site.'
+Next, You will be able to see the comments already on the page on the board with the sticky notes. If no comment is posted yet, this will be stated on a sticky note.
+In order to post a comment of your very own, you must be signed in. This is done to prevent spam bots from being able to affect the comments. To do this, just hit login on the top right of the extension and this will bring you to a webpage where you can either signin with Google, or by making a new account. Once signed in, you can go to any site and have the ability to write comments for it. These comments will apear on the sticky notes once posted.
+
 ### Developer Setup & Installation
 
 > [!NOTE]
@@ -22,7 +28,7 @@ First, git clone this repository, then refer to the following instructions to se
 
 After the repository is cloned, visit the link [chrome://extensions/](chrome://extensions/), and select load unpacked. From there, navigate to the project folder that was previously cloned and select the `/extension` folder. Once inside the `/extension` folder, select open folder and this will load the extension to your device. 
 
-Now that the extension is loaded, click the puzzle piece in the upper right hand side of your browser and select "Comment-tary" by clicking the blue aligator logo. 
+Now that the extension is loaded, click the puzzle piece in the upper right hand side of your browser and select "Comment-tary" by clicking the blue aligator logo, it is recommended to pin the extension for repeated use.
 
 #### Backend
 
