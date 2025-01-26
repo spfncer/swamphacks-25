@@ -1,0 +1,204 @@
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-LightItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+  font-family: 'Oooh Baby';
+  src: url('OoohBaby-Regular.woff2') format('woff2'),
+      url('OoohBaby-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+    background-color: blanchedalmond;
+    width: 775px;
+    min-height: 700px;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-template-rows: 100%;
+}
+
+.logins {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.board-wrap {
+  padding: 1px 10px;
+  background: url("woodgrain.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.comments-area{
+    height: 400px;
+    overflow-y: scroll;
+    background: url("cork-board.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    scrollbar-width: none;
+}
+.commends-area::-webkit-scrollbar {
+    display: none;
+}
+span.comment {
+  font-family: "Oooh Baby";
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+}
+span.tary {
+  font-family: "Cormorant Garamond";
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.left {
+  text-align: end;
+  font-size: 0.8rem;
+}
+.left > span {
+  font-family: "Cormorant Garamond";
+}
+.expanded .left {
+  margin-right: 2rem;
+}
+
+.CodeMirror-scroll{
+    background-color: blanchedalmond;
+}
+.CodeMirror {
+    background-color: blanchedalmond !important;
+}
+.CodeMirror, .CodeMirror-scroll {
+	min-height: 100px !important;
+}
+
+.comment-input::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar */
+}
+
+ul.comments-area,li{
+    list-style:none;
+  }
+  ul.comments-area{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+  ul.comments-area li div{
+    text-decoration:none;
+    color:#000;
+    background:#ffc;
+    display:block;
+    height:10em;
+    width:10em;
+    padding:1em;
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    transform: rotate(-6deg);
+    transition: transform .15s linear;
+  }
+  
+  ul.comments-area li:nth-child(even) div{
+    transform:rotate(4deg);
+    position:relative;
+    top:5px;
+    background:#cfc;
+  }
+  ul.comments-area li:nth-child(3n) div{
+    transform:rotate(-3deg);
+    position:relative;
+    top:-5px;
+    background:#ccf;
+  }
+  ul.comments-area li:nth-child(5n) div{
+    transform:rotate(5deg);
+    position:relative;
+    top:-10px;
+  }
+  
+  ul.comments-area li div:hover,ul.comments-area li div:focus{
+    box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    transform: scale(1.25);
+    position:relative;
+    z-index:5;
+  }
+  
+  ul.comments-area li{
+    margin:1em;
+  }
+  ul.comments-area:has(.expanded) {
+    overflow-y: hidden;
+    filter: brightness(0.8);
+  }
+  .hider {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 5;
+    background-color: #000000aa;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .hider.show {
+    display: block;
+  }
+  .comment {
+    word-wrap: break-word;
+    overflow-y: hidden;
+    cursor: pointer;
+    pad: 10px;
+  }
+  .expanded {
+    width: 600px;
+    min-height: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    z-index: 10;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    top: 0;
+    bottom: 0;
+    height: min-content;
+    transition: none;
+  }
+  .expanded > div.comment {
+    transform: none !important;
+    width: 100%;
+    height: 100%;
+    transition: none;
+  }
+
+  #submit-comment{
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+  }
+
+  .sign-in-message {
+    text-align: center;
+  }
