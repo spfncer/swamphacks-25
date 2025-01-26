@@ -63,3 +63,10 @@ async def callback(request: Request):
     request.session["userinfo"] = token["userinfo"]
 
     return RedirectResponse(url="/login_successful")  # 👈 updated code
+
+@auth_router.get("/profile")
+async def profile(request: Request):
+    if "userinfo" in request.session:
+        return {**{"auth": True}, **request.session["userinfo"]}
+    else:
+        return {"auth": False}
