@@ -36,6 +36,10 @@ tags_metadata = [
         "name": "Comment Functions",
         "description": "Operations related to comments on a webpage.",
     },
+    {
+        "name": "Authentication Functions",
+        "description": "Operations related to authentication with Auth0.",
+    },
     {"name": "Other"},
 ]
 
@@ -75,7 +79,7 @@ async def read_root():
     return {"Hello": "World"}
 
 # Define a route for login success
-@app.get("/login_successful", tags=["Other"], response_class=HTMLResponse)
+@app.get("/login_successful", tags=["Authentication Functions"], response_class=HTMLResponse)
 async def login_successful():
     with open("static/login_successful.html", "r") as file:
         html_content = file.read()
