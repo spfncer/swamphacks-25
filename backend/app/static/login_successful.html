@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login Successful</title>
+  <style>
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      src: url('/static/CormorantGaramond-LightItalic.woff2') format('woff2');
+      font-weight: 300;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond';
+      margin-top: 0;
+      font-weight: bolder;
+      font-size: 2.5rem;
+    }
+  </style>
+  <script>
+    window.addEventListener('load', function() {
+      const counter = document.querySelector('.counter');
+      setTimeout(function() {
+        counter.innerText = '2';
+      }, 1000);
+      setTimeout(function() {
+        counter.innerText = '1';
+      }, 2000);
+      setTimeout(function() {
+        window.close();
+      }, 3000); 
+    });
+    </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Login Successful</h1>
+    <p>This window will close in <span class = 'counter'>3</span> seconds</p>
+  </div>
+</body>
+
+</html>

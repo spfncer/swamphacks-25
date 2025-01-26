@@ -23,7 +23,11 @@ from pymongo.server_api import ServerApi
 
 from starlette.middleware.sessions import SessionMiddleware  # 👈 new code
 from auth.routes import auth_router  # 👈 new code
+
+# Added for login success page
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
 
 load_dotenv(dotenv_path="../.env")
 
@@ -46,6 +50,9 @@ app = FastAPI(
     version="0.1.0",
     openapi_tags=tags_metadata,
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 app.add_middleware(
     SessionMiddleware,
@@ -70,7 +77,7 @@ async def read_root():
 # Define a route for login success
 @app.get("/login_successful", tags=["Other"], response_class=HTMLResponse)
 async def login_successful():
-    with open("resources/login_successful.html", "r") as file:
+    with open("static/login_successful.html", "r") as file:
         html_content = file.read()
     return HTMLResponse(content=html_content)
 
