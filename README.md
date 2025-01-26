@@ -2,6 +2,8 @@
 
 Developed by: [Gabriel Aldous](https://github.com/Sn00pyW00dst0ck), [John Spurrier](https://github.com/john-spurrier), [Spencer Fasulo](https://github.com/spfncer), [Benjamin Bryant](https://github.com/Bencb03)
 
+[View Project On DevPost](https://devpost.com/software/comment-tary)
+
 ## Comment-tary
 
 **Comment-tary** is a Chrome Extension which allows users to share insights and reviews of any webpage, with the goal of providing its users with more insight into the trustworthiness of online pages and their contents. Powered by FastAPI, MongoDB, and ***(OTHERE HERE)***, Comment-tary provides a fast and reliable method to easily peer review online sources. With markdown editing support and its retro user interface styling, it brings about the "old-school" internet feel and trustworthiness to the "new-school" websites. 
@@ -18,7 +20,7 @@ First, git clone this repository, then refer to the following instructions to se
 
 #### Extension
 
-After the repository is cloned, visit the link "chrome://extensions/", and select load unpacked. From there, navigate to the project folder that was previously cloned and select the `/extension` folder. Once inside the `/extension` folder, select open folder and this will load the extension to your device. 
+After the repository is cloned, visit the link [chrome://extensions/](chrome://extensions/), and select load unpacked. From there, navigate to the project folder that was previously cloned and select the `/extension` folder. Once inside the `/extension` folder, select open folder and this will load the extension to your device. 
 
 Now that the extension is loaded, click the puzzle piece in the upper right hand side of your browser and select "Comment-tary" by clicking the blue aligator logo. 
 
