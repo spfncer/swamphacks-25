@@ -12,11 +12,11 @@ auth0_config = {
 oauth = OAuth()
 oauth.register(
     "auth0",
-    client_id=os.getenv("CLIENT_ID"),
-    client_secret=os.getenv("CLIENT_SECRET"),
+    client_id=os.getenv("AUTH0_CLIENT_ID"),
+    client_secret=os.getenv("AUTH0_CLIENT_SECRET"),
     client_kwargs={
         "scope": "openid email profile",
         "timeout": 15.0,
     },
-    server_metadata_url=f'https://{os.getenv("DOMAIN")}/.well-known/openid-configuration',
+    server_metadata_url=f'https://{os.getenv("AUTH0_DOMAIN")}/.well-known/openid-configuration',
 )

@@ -1,3 +1,4 @@
+from urllib.parse import quote_plus, urlencode
 from fastapi import APIRouter, Request
 from fastapi.responses import RedirectResponse
 
@@ -15,7 +16,7 @@ async def login(request: Request):
         return await oauth.auth0.authorize_redirect(
             request, redirect_uri=request.url_for("callback")
         )
-    return RedirectResponse(url=request.url_for("profile"))
+    return RedirectResponse(url="/")
 
 
 @auth_router.get("/signup")
@@ -27,7 +28,7 @@ async def signup(request: Request):
         return await oauth.auth0.authorize_redirect(
             request, redirect_uri=request.url_for("callback"), screen_hint="signup"
         )
-    return RedirectResponse(url=request.url_for("profile"))
+    return RedirectResponse(url="/")
 
 
 @auth_router.get("/logout")
@@ -35,7 +36,20 @@ def logout(request: Request):
     """
     Redirects the user to the Auth0 Universal Login (https://auth0.com/docs/authenticate/login/auth0-universal-login)
     """
-    return {"message": "Logout"}
+    response = RedirectResponse(
+        url="https://"
+        + auth0_config["DOMAIN"]
+        + "/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": request.url_for("read_root"),
+                "client_id": auth0_config["CLIENT_ID"],
+            },
+            quote_via=quote_plus,
+        )
+    )
+    request.session.clear()
+    return response  # 👈 updated code
 
 
 @auth_router.get("/callback")
@@ -48,4 +62,4 @@ async def callback(request: Request):
     request.session["id_token"] = token["id_token"]
     request.session["userinfo"] = token["userinfo"]
 
-    return RedirectResponse(url=request.url_for("profile"))  # 👈 updated code
+    return RedirectResponse(url="/")  # 👈 updated code

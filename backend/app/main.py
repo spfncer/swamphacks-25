@@ -68,7 +68,7 @@ async def read_root():
 
 
 @app.post(
-    "/comments/",
+    "/comments",
     response_description="Add new comment",
     response_model=CommentModel,
     status_code=status.HTTP_201_CREATED,
