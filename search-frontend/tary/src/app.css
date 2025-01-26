@@ -25,3 +25,19 @@ html {
     color: #fff;
 }
 
+.font-cormorant {
+    font-family: 'Cormorant Garamond', serif;
+}
+.font-oh-baby {
+    font-family: 'Oooh Baby', sans-serif;
+}
+
+.white-focus-ring:focus-visible,
+.white-focus-ring:active {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.rounded-token{
+    border-radius: 20px;
+}
