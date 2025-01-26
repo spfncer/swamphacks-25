@@ -57,13 +57,16 @@
         commentDiv.classList.add("comment");
         const para = document.createElement("p");
         para.innerHTML = converter.makeHtml(text);
-        const user = document.createElement("p");
-        user.classList.add("left");
-        const userSpan = document.createElement("span");
-        userSpan.innerText = author;
-        user.appendChild(userSpan);
+        if (author) {
+            const user = document.createElement("p");
+            user.classList.add("left");
+            const userSpan = document.createElement("span");
+            userSpan.innerText = author;
+            user.appendChild(userSpan);
+        }
         commentDiv.appendChild(para);
-        commentDiv.appendChild(user);
+        if (author)
+            commentDiv.appendChild(user);
         commentLi.appendChild(commentDiv);
         commentsArea.appendChild(commentLi);
 
@@ -81,6 +84,9 @@
                 response.comments.forEach(comment => {
                     createNote(comment.body, comment.author);
                 });
+                if (response.comments.length === 0 ) {
+                    createNote("No one's commented here yet. Why not be the first?<br><br> :)", null);
+                }
             } else {
                 console.log("No comments found");
             }
