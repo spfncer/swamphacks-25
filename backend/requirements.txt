@@ -1,3 +1,6 @@
 fastapi[standard]
+pymongo==4.9.2
 bson
 motor
+authlib>=1.0
+requests>=2.27.1
