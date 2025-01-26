@@ -1,0 +1,27 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-LightItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+  font-family: 'Oooh Baby';
+  src: url('OoohBaby-Regular.woff2') format('woff2'),
+      url('OoohBaby-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+html {
+    background-color: #303030;
+    color: #fff;
+}
+
