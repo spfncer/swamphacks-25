@@ -6,7 +6,7 @@ Developed by: [Gabriel Aldous](https://github.com/Sn00pyW00dst0ck), [John Spurri
 
 ## Comment-tary
 
-**Comment-tary** is a Chrome Extension which allows users to share insights and reviews of any webpage, with the goal of providing its users with more insight into the trustworthiness of online pages and their contents. Powered by FastAPI, MongoDB, and ***(OTHERE HERE)***, Comment-tary provides a fast and reliable method to easily peer review online sources. With markdown editing support and its retro user interface styling, it brings about the "old-school" internet feel and trustworthiness to the "new-school" websites. 
+**Comment-tary** is a Chrome Extension which allows users to share insights and reviews of any webpage, with the goal of providing its users with more insight into the trustworthiness of online pages and their contents. Powered by FastAPI, MongoDB, and Auth0, Comment-tary provides a fast and reliable method to easily peer review online sources. With markdown editing support and its retro user interface styling, it brings about the "old-school" internet feel and trustworthiness to the "new-school" websites. 
 
 > [!NOTE]
 > Currently, Comment-Tary is not published. To use it, you will need to setup a local development environment.
