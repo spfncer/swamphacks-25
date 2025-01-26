@@ -57,16 +57,13 @@
         commentDiv.classList.add("comment");
         const para = document.createElement("p");
         para.innerHTML = converter.makeHtml(text);
-        if (author) {
-            const user = document.createElement("p");
-            user.classList.add("left");
-            const userSpan = document.createElement("span");
-            userSpan.innerText = author;
-            user.appendChild(userSpan);
-        }
+        const user = document.createElement("p");
+        user.classList.add("left");
+        const userSpan = document.createElement("span");
+        userSpan.innerText = author || "";
+        user.appendChild(userSpan);
         commentDiv.appendChild(para);
-        if (author)
-            commentDiv.appendChild(user);
+        commentDiv.appendChild(user);
         commentLi.appendChild(commentDiv);
         commentsArea.appendChild(commentLi);
 
