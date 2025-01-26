@@ -4,30 +4,32 @@
 (() => {
     let simplemde;
     let currentURL;
+    let user = undefined;
     function formatURL(url) {
         const urlObj = new URL(url);
         return urlObj.host + urlObj.pathname;
     }
+    function closePopup() {
+        window.close();
+    }
+
+    // Get the current tab URL
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         var activeTab = tabs[0];
         var activeTabUrl = formatURL(activeTab.url);
         currentURL = activeTabUrl;
         document.querySelector(".site-url").innerText = activeTabUrl;
-        console.log("Active tab url", activeTabUrl);
     });
+    // Register the event listeners
     window.addEventListener("DOMContentLoaded", () => {
-        simplemde = new SimpleMDE({
-            element: document.getElementById("comment-input"), toolbar: [
-                "bold", "italic", "heading", "|", "quote", "code", "table", "|", "preview", "guide"
-            ]
-        });
-
         const button = document.querySelector("#submit-comment");
-        console.log("Button", button);
         button.addEventListener("click", postComment);
 
         const hider = document.querySelector(".hider");
         hider.addEventListener("click", clickToClose);
+
+        const logout = document.querySelector("#logout-link");
+        logout.addEventListener("click", closePopup);
     });
 
     function clickToClose(e) {
@@ -41,9 +43,6 @@
     }
 
     function expandNote(node) {
-        // console.log("Expanding note", node);
-        // const board = document.querySelector(".comments-area");
-        // board?.addEventListener("click", clickToClose);
         node.classList.add("expanded");
         const hider = document.querySelector(".hider");
         hider.classList.add("show");
@@ -86,12 +85,50 @@
         });
     })();
 
+    //tell the background service to fetch user info
+    (async () => {
+        chrome.runtime.sendMessage({ type: "getUserInfo" }, function (response) {
+            const loginsArea = document.querySelector(".logins");
+            if (typeof response === "object" && response.auth) {
+                //user signed in
+                user = response.nickname;
+                const login = document.querySelector("#login-link");
+                login.remove();
+                const helloMessage = document.createElement("p");
+                helloMessage.innerText = `Howdy, ${response.nickname}`;
+                loginsArea.prepend(helloMessage);
+
+                simplemde = new SimpleMDE({
+                    element: document.getElementById("comment-input"), toolbar: [
+                        "bold", "italic", "heading", "|", "quote", "code", "table", "|", "preview", "guide"
+                    ]
+                });
+            } else {
+                //user not signed in
+                const logout = document.querySelector("#logout-link");
+                logout.remove();
+                const helloMessage = document.createElement("p");
+                helloMessage.innerText = `Howdy, stranger`;
+                loginsArea.appendChild(helloMessage);
+
+                const input = document.getElementById("comment-input");
+                input.remove();
+                const submit = document.getElementById("submit-comment");
+                submit.remove();
+
+                const message = document.createElement("p");
+                message.classList.add("sign-in-message");
+                message.innerText = "Please sign in to comment";
+                document.querySelector(".inner").appendChild(message);
+            }
+        });
+    })();
+
     async function postComment(e) {
         e.preventDefault();
-        console.log("Posting comment");
-        const author = 'Fun Person'; //TODO: get author from user
         const body = simplemde.value();
-        chrome.runtime.sendMessage({ type: "postComment", author, url: currentURL, body: body }, function (response) {
+        chrome.runtime.sendMessage({ type: "postComment", author: user, url: currentURL, body: body }, function (response) {
+            console.log("raw response", response);
             if (typeof response === "object") {
                 createNote(response.body, response.author);
                 simplemde.value("");

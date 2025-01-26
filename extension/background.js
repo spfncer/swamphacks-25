@@ -1,29 +1,22 @@
 /// <reference path="chrome.intellisense.js" />
-console.log("Background script loaded");
 chrome.runtime.onMessage.addListener(function (message, sender, senderResponse) {
     if (message.type == "getComments") {
         fetch("http://127.0.0.1:8000/comments/search", {
             method: "POST",
-            headers: { "Content-Type": "application/json" }, 
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 "webpage": message.url
             })
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Raw data", data);
                 senderResponse(data);
             })
         return true;
-    } else if (message.type == "postComment"){
-        console.log("Posting commment", JSON.stringify({
-            "author": message.author,
-            "webpage": message.url,
-            "body": message.body
-        }))
+    } else if (message.type == "postComment") {
         fetch("http://127.0.0.1:8000/comments/", {
             method: "POST",
-            headers: { "Content-Type": "application/json" }, 
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 "author": message.author,
                 "webpage": message.url,
@@ -32,9 +25,15 @@ chrome.runtime.onMessage.addListener(function (message, sender, senderResponse) 
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Raw data", data);
                 senderResponse(data);
             })
-        }
         return true;
-    });
+    } else if (message.type == "getUserInfo") {
+        fetch("http://127.0.0.1:8000/profile", { method: "GET" })
+            .then(response => response.json())
+            .then(data => {
+                senderResponse(data);
+            })
+    }
+    return true;
+});

@@ -181,3 +181,7 @@ ul.comments-area,li{
     border: none;
     cursor: pointer;
   }
+
+  .sign-in-message {
+    text-align: center;
+  }
