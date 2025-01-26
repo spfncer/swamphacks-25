@@ -16,7 +16,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, senderResponse) 
             })
         return true;
     } else if (message.type == "postComment"){
-        fetch("http://127.0.0.1:8000/comments/search", {
+        console.log("Posting commment", JSON.stringify({
+            "author": message.author,
+            "webpage": message.url,
+            "body": message.body
+        }))
+        fetch("http://127.0.0.1:8000/comments/", {
             method: "POST",
             headers: { "Content-Type": "application/json" }, 
             body: JSON.stringify({
@@ -31,4 +36,5 @@ chrome.runtime.onMessage.addListener(function (message, sender, senderResponse) 
                 senderResponse(data);
             })
         }
+        return true;
     });
