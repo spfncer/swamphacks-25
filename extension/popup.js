@@ -5,6 +5,8 @@
     let simplemde;
     let currentURL;
     let user = undefined;
+    let converter = new showdown.Converter();
+
     function formatURL(url) {
         const urlObj = new URL(url);
         return urlObj.host + urlObj.pathname;
@@ -54,7 +56,7 @@
         const commentDiv = document.createElement("div");
         commentDiv.classList.add("comment");
         const para = document.createElement("p");
-        para.innerText = text;
+        para.innerHTML = converter.makeHtml(text);
         const user = document.createElement("p");
         user.classList.add("left");
         const userSpan = document.createElement("span");
@@ -100,7 +102,7 @@
 
                 simplemde = new SimpleMDE({
                     element: document.getElementById("comment-input"), toolbar: [
-                        "bold", "italic", "heading", "|", "quote", "code", "table", "|", "preview", "guide"
+                        "bold", "italic", "heading", "|", "quote", "code", "|", "preview", "guide"
                     ]
                 });
             } else {
