@@ -11,6 +11,21 @@ html {
     width: 775px;
     min-height: 700px;
 }
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-template-rows: 100%;
+}
+
+.logins {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .board-wrap {
   padding: 1px 10px;
   background: url("woodgrain.jpg");

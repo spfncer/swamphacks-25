@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Comment-Tary</title>
-    <script src="resizeTextarea.js"></script>
-    <link rel="stylesheet" href="assets/popup.css">
-    <link rel="stylesheet" href="lib/simplemde.min.css">
-    <script src="lib/simplemde.min.js"></script>
-    <script src="popup.js"></script>
 
-  </head>
-  <body>
-    <div class="inner">
-      <div class="toolbar"><h1>Comment -<span class="tary">Tary</span></h1></div>
-      <h2>This Site</h2>
-      <p class="site-url"></p>
-      <h2>What Others Say:</h2>
-      <div class="board-wrap">
-        <ul class="comments-area">
-          <div class="hider"></div>
-          <!-- 
+<head>
+  <meta charset="UTF-8">
+  <title>Comment-Tary</title>
+  <script src="resizeTextarea.js"></script>
+  <link rel="stylesheet" href="assets/popup.css">
+  <link rel="stylesheet" href="lib/simplemde.min.css">
+  <script src="lib/simplemde.min.js"></script>
+  <script src="popup.js"></script>
+
+</head>
+
+<body>
+  <div class="inner">
+    <div class="toolbar">
+      <h1>Comment -<span class="tary">Tary</span></h1>
+      <div class="logins">
+        <a href="http://127.0.0.1:8000/login" target="_blank">Login</a> |
+        <a href="http://127.0.0.1:8000/logout">Logout</a>
+      </div>
+    </div>
+    <h2>This Site</h2>
+    <p class="site-url"></p>
+    <h2>What Others Say:</h2>
+    <div class="board-wrap">
+      <ul class="comments-area">
+        <div class="hider"></div>
+        <!-- 
           <li>
             <div>
               <p>
               <p class="left">- <span>Name</span></p>
           -->
-        </ul>
-      </div>
-      <textarea id="comment-input" placeholder="Enter your comment here"></textarea>
-      <button id="submit-comment">Post</button>
+      </ul>
     </div>
-  </body>
+    <textarea id="comment-input" placeholder="Enter your comment here"></textarea>
+    <button id="submit-comment">Post</button>
+  </div>
+</body>
+
 </html>

@@ -21,6 +21,13 @@
                 "bold", "italic", "heading", "|", "quote", "code", "table", "|", "preview", "guide"
             ]
         });
+
+        const button = document.querySelector("#submit-comment");
+        console.log("Button", button);
+        button.addEventListener("click", postComment);
+
+        const hider = document.querySelector(".hider");
+        hider.addEventListener("click", clickToClose);
     });
 
     function clickToClose(e) {
@@ -93,12 +100,4 @@
             }
         });
     }
-    window.addEventListener("DOMContentLoaded", () => {
-        const button = document.querySelector("#submit-comment");
-        console.log("Button", button);
-        button.addEventListener("click", postComment);
-
-        const hider = document.querySelector(".hider");
-        hider.addEventListener("click", clickToClose);
-    })
 })();
