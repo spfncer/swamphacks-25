@@ -8,7 +8,7 @@
 
 ### Installation
 
-To install Comment-tary in your browser, navigate to the extensions store and search for 
+To install Comment-tary in your browser, navigate to []() and install the extension. 
 
 ### Developer Setup
 
@@ -19,7 +19,7 @@ First, git clone this repository, then refer to the following instructions to se
 
 #### Extension
 
-After the repository is cloned, visit the link "chrome://extensions/", and select load unpacked. From there, navigate to the project folder that was previously cloned and select the extension folder. Once inside the extension folder, select open folder and this will load the extension to your device. 
+After the repository is cloned, visit the link "chrome://extensions/", and select load unpacked. From there, navigate to the project folder that was previously cloned and select the `/extension` folder. Once inside the `/extension` folder, select open folder and this will load the extension to your device. 
 
 Now that the extension is loaded, click the puzzle piece in the upper right hand side of your browser and select "Comment-tary" by clicking the blue aligator logo. 
 
