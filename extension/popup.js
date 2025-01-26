@@ -14,7 +14,10 @@ window.addEventListener("DOMContentLoaded", () => {
      });
 });
 
-chrome.runtime.sendMessage({ type: "getComments" }, function (response) {
+//tell the background service to fetch comments
+(async () => {
+    const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
+    chrome.runtime.sendMessage({ type: "getComments", url: tab.url }, function (response) {
     if(typeof response === "object" && typeof response.comments === "object") {
         const commentsArea = document.querySelector(".comments-area");
         response.comments.forEach(comment => {
@@ -30,6 +33,5 @@ chrome.runtime.sendMessage({ type: "getComments" }, function (response) {
     } else {
         console.log("No comments found");
     }
-
 });
-
+})();
