@@ -1,6 +1,6 @@
 from urllib.parse import quote_plus, urlencode
 from fastapi import APIRouter, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 
 from auth.config import auth0_config, oauth
 
@@ -70,3 +70,10 @@ async def profile(request: Request):
         return {**{"auth": True}, **request.session["userinfo"]}
     else:
         return {"auth": False}
+
+# Define a route for login success
+@auth_router.get("/login_successful", tags=["Authentication Functions"], response_class=HTMLResponse)
+async def login_successful():
+    with open("static/login_successful.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
